@@ -39,4 +39,4 @@ $ streamlit run app.py
 
 ### Demo
 
-galaxy_search_sr.webm
+![Demo](galaxy_search_sr.mp4)
