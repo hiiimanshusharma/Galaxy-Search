@@ -39,4 +39,4 @@ $ streamlit run app.py
 
 ### Demo
 
-![Demo](galaxy_search_sr.mp4)
+![Demo](https://raw.githubusercontent.com/hiiimanshusharma/Galaxy-Search//main/galaxy_search_sr.mp4)
