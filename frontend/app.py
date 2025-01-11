@@ -4,10 +4,9 @@ from streamlit_modal import Modal
 import streamlit as st
 import requests
 
-# FastAPI endpoint URL
+
 API_URL = "http://localhost:8000/api/v1"
 
-# Function to make requests to the FastAPI backend
 def fetch_data(endpoint: str, params: dict) -> dict:
     try:
         response = requests.get(f"{API_URL}/{endpoint}", params=params)
@@ -17,7 +16,6 @@ def fetch_data(endpoint: str, params: dict) -> dict:
         st.error(f"Error fetching data: {e}")
         return {}
 
-# Regular Search Section
 def regular_search_section():
     st.header("Regular Search")
     modal = Modal(
@@ -90,14 +88,17 @@ def regular_search_section():
         else:
             st.warning("Please enter a search query")
 
-# Semantic Search Section
 def semantic_search_section():
     st.header("Semantic Search")
 
     search_query = st.text_input("Enter search query:")
-    skip = st.number_input("Skip results", min_value=0, value=0)
-    limit = st.number_input("Results per page", min_value=1, value=10)
-    year = st.text_input("Year (optional):")
+    col1, col2, col3= st.columns(3)
+    with col1:
+        skip = st.number_input("Skip results", min_value=0, value=0)
+    with col2:
+        limit = st.number_input("Results per page", min_value=1, value=10)
+    with col3:
+        year = st.text_input("Year (optional):")
 
     if st.button("Search"):
         if search_query:
@@ -117,49 +118,20 @@ def semantic_search_section():
         else:
             st.warning("Please enter a search query")
 
-# Docs Per Year Count Section
-def docs_per_year_count_section():
-    st.header("Documents Per Year Count")
-
-    search_query = st.text_input("Enter search query:")
-    tokenizer = st.selectbox("Tokenizer", ['Standard', 'N-Gram'])
-
-    if st.button("Get Count"):
-        if search_query:
-            params = {
-                "search_query": search_query,
-                "tokenizer": tokenizer
-            }
-            result = fetch_data("get_docs_per_year_count", params)
-            if result:
-                docs_per_year = result.get("docs_per_year", {})
-                st.write("Documents per Year:")
-                for year, count in docs_per_year.items():
-                    st.write(f"{year}: {count}")
-        else:
-            st.warning("Please enter a search query")
-
-# Streamlit App
 def main():
     st.set_page_config(layout="wide")
 
-    st.title("Search and Document Analysis")
+    st.title("Galaxy Search :star2:")
     st.markdown('<style>' + open('./template/css/style.css').read() + '</style>', unsafe_allow_html=True)
 
-    
-
-    # Sidebar for navigation
-    # st.sidebar.title("Navigation")
     with st.sidebar:
-        tabs = on_hover_tabs(tabName=['Regular Search', 'Semantic Search', 'Semantic Search'], 
-                         iconName=['dashboard', 'dashboard', 'dashboard'], default_choice=0)
+        tabs = on_hover_tabs(tabName=['Regular Search', 'Semantic Search'], 
+                         iconName=['dashboard', 'dashboard'], default_choice=0)
 
     if tabs == "Regular Search":
         regular_search_section()
     elif tabs == "Semantic Search":
         semantic_search_section()
-    elif tabs == "Documents Per Year Count":
-        docs_per_year_count_section()
 
 if __name__ == "__main__":
     main()
