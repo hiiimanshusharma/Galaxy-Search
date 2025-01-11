@@ -39,9 +39,6 @@ $ streamlit run app.py
 
 ### Demo
 
-<video width="720" height="480" controls>
-  <source src="galaxy_search_sr.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+https://github.com/user-attachments/assets/b8b686b9-e929-452a-a951-bb1986c7be94
 
-<!-- ![Demo](https://raw.githubusercontent.com/hiiimanshusharma/Galaxy-Search//main/galaxy_search_sr.mp4) -->
+
